@@ -1,19 +1,25 @@
 site_name: Flying Bear Klipper
 site_url: https://wolf65.github.io/FBRebornKlipper/
+repo_name: Wolf65/FBRebornKlipper
+repo_url: https://github.com/Wolf65/FBRebornKlipper
 
 theme:
+  language: ru
   name: material
   features:
+    - navigation.instant
+    - navigation.instant.prefetch
+    - navigation.instant.progress
     - navigation.tabs
-    - navigation.top
     - navigation.sections
+    - toc.follow
     - toc.integrate
+    - navigation.top
     - search.suggest
     - search.highlight
     - content.tabs.link
-#   - content.code.annotation
     - content.code.copy
-  language: ru
+    
   palette:
     scheme: slate   
     primary: teal
@@ -27,6 +33,14 @@ extra:
       link: https://t.me/IronWolf65
 
 markdown_extensions:
+  - tables
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
+
   - pymdownx.highlight:
       anchor_linenums: true
   - pymdownx.inlinehilite
@@ -36,12 +50,6 @@ markdown_extensions:
       generic: true
   - footnotes
   - pymdownx.details
-  - pymdownx.superfences
-  - pymdownx.tabbed:
-      alternate_style: true
-      slugify: !!python/object/apply:pymdownx.slugs.slugify
-        kwds:
-          case: lower
   - pymdownx.caret
   - pymdownx.tilde
   - attr_list
@@ -50,4 +58,4 @@ markdown_extensions:
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
 
 copyright: |
-  &copy; 2024 <a href="https://github.com/Wolf65/FBRebornKlipper"  target="_blank" rel="noopener">Iron Wolf</a>
+  Copyright &copy; 2024 <a href="https://github.com/Wolf65/FBRebornKlipper"  target="_blank" rel="noopener">Iron Wolf</a>

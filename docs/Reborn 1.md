@@ -1,27 +1,36 @@
 # Reborn
 
 ## Прошивка плата принтера
+
 ### Настройка прошивки
+
 Для того, чтобы Raspberry Pi мог управлять микроконтроллером принтера, требуется скомпилировать и установить прошивку МК. Настройки прошивки зависят от способа соединения Raspberry Pi с управляющей платой - по USB или по UART.
 
 В терминале предварительно очищаем рабочий каталог, чтобы гарантированно полностью пересобрать прошивку:
-```batch
+
+``` bash
 cd ~/klipper/
 make clean
 ```
+
 Запускаем интерфейс настройки прошивки:
-```batch
+
+``` bash
 make menuconfig
 ```
+
 #### Конфигурации для плат принтера
+
 === "MKS Robin Nano v1.1"
     - Включаем `Extra low-level configuration options`
     - Micro-controller Architecture → `STMicroelectronics STM32`
     - Processor model → `STM32F103`
     - Bootloader offset → `28KiB bootloader`
+
     ===+ "USB"
         - Communication interface → `Serial (on USART3 PB11/PB10)`
         потому, что USB подключение этой платы использует пины UART3: PB10-TX и PB11-RX
+
     === "UART" 
         - Communication interface → `Serial (on USART1 PA10/PA9)`
         потому, что WiFi модуль платы использует пины UART1: PA9-TX и PA10-RX
@@ -33,6 +42,7 @@ make menuconfig
     - `Micro-controller Architecture` → `STMicroelectronics STM32`
     - `Processor model` → `STM32F407`
     - `Bootloader offset` → `32KiB bootloader`
+
     ===+ "USB"
         - `Communication interface` → `Serial (on USART3 PB11/PB10)`
 
@@ -54,26 +64,36 @@ make menuconfig
 ### Компиляция прошивки
 
 Сохраняем конфигурацию нажатием последовательно «Q» и «Y». После конфигурации запускаем компиляцию:
-```batch
+
+``` bash
 make
 ```
+
 Результат - файл `klipper.bin` в папке `~/klipper/out/`
+
 === "MKS Robin Nano v1.1"
     - Бутлоадер этой платы требует шифрования и определённого имени файла. Выполните следующую команду для шифрования и переименования:
-    ```batch
+    ```bash
     ~/klipper/scripts/update_mks_robin.py ~/klipper/out/klipper.bin ~/klipper/out/Robin_nano35.bin
     ```
+
     ---
+
 ===+ "MKS Robin Nano v1.3/MKS Robin Nano-S v1.3"
     - Бутлоадер этой платы уже не требует шифрования, а только определённого имени файла. Выполните следующую команду для переименования:
-    ```batch
+
+    ``` bash
     mv ~/klipper/out/klipper.bin ~/klipper/out/Robin_nano35.bin
     ```
+
     ---
+
 Так же для удобства можно сразу переместить готовый `Robin_nano35.bin` в корень `printer_data/config/`
-```batch
+
+``` bash
 mv ~/klipper/out/Robin_nano35.bin ~/printer_data/config/Robin_nano35.bin
 ```
+
 После файл можно `Robin_nano35.bin` скачать через веб-интерфейсе Fluidd/Mainsail
 
 ### Прошивка платы
@@ -93,9 +113,11 @@ mv ~/klipper/out/Robin_nano35.bin ~/printer_data/config/Robin_nano35.bin
 Например, вы не можете не указать кинематику, это вызовет ошибку запуска клиппера. Но если вы не укажете минимальную температуру экструзии, будет использовано значение 170℃ по умолчанию. Если вы не укажете Input Shaping в конфиге, он будет отключён, а команды, связанные с ним, будут вызывать ошибку. Иногда в других руководствах можно встретить какие-то параметры, которые и так соответствуют значениям по умолчанию. Я такие параметры просто не указываю в большинстве случаев.
 
 `printer.cfg` поддерживает модульность и вложенность. Блоки кода могут быть вынесены в отдельные конфигурационные файлы, для подключения которых в `printer.cfg` нужно добавить строчку
-```batch
+
+```
 [include имяфайла.cfg]
 ```
+
 Значения могут дублироваться в основном файле `printer.cfg` и дочерних конфигах, и при этом иметь разные значения по следующим правилам:
 
 - значение параметра из каждого следующего включённого конфига перезаписывает предыдущий, т.е. чем ниже в списке включённых файл, тем выше его приоритет
@@ -106,17 +128,20 @@ mv ~/klipper/out/Robin_nano35.bin ~/printer_data/config/Robin_nano35.bin
 ---
 ### MCU - микроконтроллер
 
-```
+``` title="printer.cfg"
 [mcu]
 serial: /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0
 restart_method: command
 ```
+
 ===+ "USB"
     ```
     serial: /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0
     ```
+
     но лучше проверить свой порт выполнив команду
-    ```batch
+
+    ``` bash
     ls /dev/serial/by-id/*
     ```
 
@@ -133,7 +158,7 @@ restart_method: command
 ---
 ### PRINTER - кинематика
 
-```batch
+``` title="printer.cfg"
 [printer]
 kinematics: corexy
 max_velocity: 250
@@ -151,15 +176,15 @@ max_z_accel: 100
 ---
 ### HEATER BED - стол
 
-```batch
+``` title="printer.cfg" hl_lines="6 7 8"
 [heater_bed]
 heater_pin: PA0
 sensor_type: EPCOS 100K B57560G104F
 sensor_pin: PC0
 control: pid
-pid_Kp: 325.10
-pid_Ki: 63.35
-pid_Kd: 417.10
+pid_Kp: 0
+pid_Ki: 0
+pid_Kd: 0
 min_temp: 0
 max_temp: 130
 ```
@@ -169,13 +194,13 @@ max_temp: 130
 
 #### Модели
 
-```batch
+``` title="printer.cfg"
 [fan]
 pin: PB1
 ```
 #### Хотэнда
 
-```batch
+``` title="printer.cfg"
 [heater_fan heater_fan]
 pin: PB0
 ```
@@ -183,7 +208,7 @@ pin: PB0
 ---
 ### BEEPER - пищалка
 
-```batch
+``` title="printer.cfg"
 [output_pin BEEPER_pin]
 pin: PC5
 pwm: True
@@ -196,7 +221,7 @@ scale: 1000
 ---
 ### FILAMENT SENSOR - датчик окончания филамента
 
-```batch
+``` title="printer.cfg"
 [filament_switch_sensor filament_sensor]
 switch_pin: PA4
 runout_gcode:
@@ -208,7 +233,7 @@ runout_gcode:
 ---
 ### BED LEVELING - регулировка уровня стола
 
-```batch
+``` title="printer.cfg"
 [bed_screws]
 screw1: 25,30
 screw1_name: front left screw
@@ -219,4 +244,54 @@ screw3_name: back right screw
 screw4: 25,180
 screw4_name: back left screw
 speed: 150
+```
+
+---
+## Разное
+
+### Заводские напряжения на драйверах
+
+| Драйвер | Напряжение |
+| :-----: | :--------: |
+|    X    |  1.35-1.4  |
+|    Y    |  1.35-1.4  |
+|    Z    |  1.2-1.25  |
+|    E    |  1         |
+|    Z1   |  1.2-1.25  |
+
+### Спасение флешки от "протирания"
+
+Как правило во встраимовых системах Linux (Armbian, Raspberry и т.д.) запись на флеш во время работы не происходит. 
+Иначе она затрет флеш до дыр. Все логи пишутся на виртуальный диск, созданный в оперативной памяти, но в случае с klipper беда, он и прочие сервисы связанные с ним, пишут лог в папку с его конфигом и из-за этого флешка может "протереться до дыр".
+
+При установке через `kiauh`, для одного принтера, конфиг сохраняется в домашнюю папку пользователя в `printer_data`. Там находится всё, и параметры запуска, и логи, и конфиги принтера. Логи, т.к. пишутся в домашний каталог, "протирают" флешку, чтобы этого не происходило нужно их перенести в папку `/tmp`, которая находится в оперативной памяти. 
+
+Чтобы это сделать нужно:
+
+Останавливаем сревисы:
+
+``` bash
+sudo service klipper stop
+sudo service moonraker stop
+sudo service KlipperScreen stop
+```
+
+Удаляем папку:
+
+``` bash
+rm -r ~/printer_data/logs
+```
+
+Создаем символьную ссылку на папку `/tmp` с названием `logs` в папку конфига клипера:
+
+``` bash
+ln -s /tmp/ ~/printer_data/logs
+```
+
+Запускаем сервисы:
+
+``` bash
+sudo service klipper start
+sudo service moonraker start
+sudo service KlipperScreen start
 ```
