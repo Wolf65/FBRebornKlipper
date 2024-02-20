@@ -21,17 +21,23 @@ make menuconfig
 
 === "MKS Robin Nano v1.1"
     - Включаем `Extra low-level configuration options`
-    - Micro-controller Architecture → `STMicroelectronics STM32`
-    - Processor model → `STM32F103`
-    - Bootloader offset → `28KiB bootloader`
+    - `Micro-controller Architecture` → `STMicroelectronics STM32`
+    - `Processor model` → `STM32F103`
+    - `Bootloader offset` → `28KiB bootloader`
 
     ===+ "USB"
-        - Communication interface → `Serial (on USART3 PB11/PB10)` т.к. USB подключение этой платы использует пины UART3: PB10-TX и PB11-RX
+        - `Communication interface` → `Serial (on USART3 PB11/PB10)` т.к. USB подключение этой платы использует пины UART3: PB10-TX и PB11-RX
+
+        ---
 
     === "UART" 
-        - Communication interface → `Serial (on USART1 PA10/PA9)` т.к. WiFi модуль платы использует пины UART1: PA9-TX и PA10-RX
+        - `Communication interface` → `Serial (on USART1 PA10/PA9)` т.к. WiFi модуль платы использует пины UART1: PA9-TX и PA10-RX
 
-    ---
+        ---
+    
+    (Опционально)
+
+    - Для отключения стокового экрана (т.к. klipper его не поддерживает) можно указать в `GPIO pins to set at micro-controller startup` → `!PD13,!PC6`
 
 ===+ "MKS Robin Nano v1.3/MKS Robin Nano-S v1.3"
     - Включаем `Extra low-level configuration options`
@@ -46,7 +52,7 @@ make menuconfig
 
     === "UART"
         - `Communication interface` → `Serial (on USART1 PA10/PA9)` т.к. WiFi модуль платы использует пины UART1: PA9-TX и PA10-RX
-
+        
         ---
 
     (Опционально)
