@@ -49,7 +49,9 @@ make menuconfig
 
         ---
 
-    - Если нужно отключить стоковый экран (т.к. klipper его не поддерживает) можно в `GPIO pins to set at micro-controller startup` → `!PD13 !PC6`
+    (Опционально)
+
+    - Для отключения стокового экрана (т.к. klipper его не поддерживает) можно указать в `GPIO pins to set at micro-controller startup` → `!PD13,!PC6`
 
 ---
 ## Компиляция прошивки
