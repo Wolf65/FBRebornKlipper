@@ -32,6 +32,10 @@ theme:
 plugins:
     - search
     - awesome-pages
+    - git-revision-date-localized:
+        locale: ru
+        timezone: Europe/Moscow
+        type: datetime
 
 extra:
   social:

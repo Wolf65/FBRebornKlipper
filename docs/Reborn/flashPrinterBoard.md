@@ -26,12 +26,12 @@ make menuconfig
     - `Bootloader offset` → `28KiB bootloader`
 
     ===+ "USB"
-        - `Communication interface` → `Serial (on USART3 PB11/PB10)` т.к. USB подключение этой платы использует пины UART3: PB10-TX и PB11-RX
+        - `Communication interface` → `Serial (on USART3 PB11/PB10)` т.к. USB подключение этой платы использует пины `UART3`: `PB10-TX` и `PB11-RX`
 
         ---
 
     === "UART" 
-        - `Communication interface` → `Serial (on USART1 PA10/PA9)` т.к. WiFi модуль платы использует пины UART1: PA9-TX и PA10-RX
+        - `Communication interface` → `Serial (on USART1 PA10/PA9)` т.к. WiFi модуль платы использует пины `UART1`: `PA9-TX` и `PA10-RX`
 
         ---
     
@@ -46,13 +46,13 @@ make menuconfig
     - `Bootloader offset` → `32KiB bootloader`
 
     ===+ "USB"
-        - `Communication interface` → `Serial (on USART3 PB11/PB10)` т.к. USB подключение этой платы использует пины UART3: PB10-TX и PB11-RX
+        - `Communication interface` → `Serial (on USART3 PB11/PB10)` т.к. USB подключение этой платы использует пины `UART3`: `PB10-TX` и `PB11-RX`
 
         ---
 
     === "UART"
-        - `Communication interface` → `Serial (on USART1 PA10/PA9)` т.к. WiFi модуль платы использует пины UART1: PA9-TX и PA10-RX
-        
+        - `Communication interface` → `Serial (on USART1 PA10/PA9)` т.к. WiFi модуль платы использует пины `UART1`: `PA9-TX` и `PA10-RX`
+
         ---
 
     (Опционально)
