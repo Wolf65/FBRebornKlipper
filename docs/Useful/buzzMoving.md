@@ -1,5 +1,3 @@
-# Решение скрежета при перемещение
-
 Если у вас при перемещение (преимущественно диагональном) головы вы слышите примерно такой звук:
 
 [Пример 1](https://t.me/Reborn_3D/1/167654)
@@ -26,11 +24,11 @@
 2) Уменьшить в прошивке микрошаги для `X` и `Y` так же в двое.
 
 ===+ "Klipper"
-    ```  title="printer.cfg"
+    ``` title="printer.cfg"
     [stepper_x]
     microsteps: 16
     ```
-    ```  title="printer.cfg"
+    ``` title="printer.cfg"
     [stepper_y]
     microsteps: 16
     ```

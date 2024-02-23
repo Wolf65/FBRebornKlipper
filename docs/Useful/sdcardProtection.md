@@ -1,5 +1,3 @@
-# Спасение флешки от "протирания"
-
 Как правило во встраимовых системах Linux (Armbian, Raspberry и т.д.) запись на флеш во время работы не происходит. 
 Иначе она затрет флеш до дыр. Все логи пишутся на виртуальный диск, созданный в оперативной памяти, но в случае с klipper беда, он и прочие сервисы связанные с ним, пишут лог в папку с его конфигом и из-за этого флешка может "протереться до дыр".
 
@@ -9,7 +7,7 @@
 
 Останавливаем сревисы:
 
-``` bash
+```shell
 sudo service klipper stop
 sudo service moonraker stop
 sudo service KlipperScreen stop
@@ -17,19 +15,19 @@ sudo service KlipperScreen stop
 
 Удаляем папку:
 
-``` bash
+```shell
 rm -r ~/printer_data/logs
 ```
 
 Создаем символьную ссылку на папку `/tmp` с названием `logs` в папку конфига клипера:
 
-``` bash
+```shell
 ln -s /tmp/ ~/printer_data/logs
 ```
 
 Запускаем сервисы:
 
-``` bash
+```shell
 sudo service klipper start
 sudo service moonraker start
 sudo service KlipperScreen start

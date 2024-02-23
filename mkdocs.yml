@@ -31,7 +31,6 @@ theme:
 
 plugins:
     - search
-    - awesome-pages
     - git-revision-date-localized:
         locale: ru
         timezone: Europe/Moscow
@@ -77,3 +76,13 @@ markdown_extensions:
 
 copyright: |
   Copyright &copy; 2024 <a href="https://github.com/Wolf65/FBRebornKlipper"  target="_blank" rel="noopener">Iron Wolf</a>
+
+nav:
+  - Добро пожаловать: index.md
+  - Reborn:
+    - Прошивка платы принтера: Reborn/flashPrinterBoard.md
+    - Конфигурация Klipper: Reborn/klipperConfig.md
+  - Полезное:
+    - Заводское напряжение на драйверах: Useful/driversVoltage.md
+    - Скрежет при перемещение: Useful/buzzMoving.md
+    - Спасение флешки от "протирания": Useful/sdcardProtection.md
